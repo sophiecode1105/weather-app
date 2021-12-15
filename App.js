@@ -3,24 +3,17 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <view style = {{width:100,heightL100,backgroundcolor : "tomato" }}></view>
-      <view style = {{width:100,heightL100,backgroundcolor : "teal" }}></view>
-      <view style = {{width:100,heightL100,backgroundcolor : "orange" }}></view> 
+  return ( //레이아웃만들기 //부모컴포넌트 기준이기에 매우 중요
+    <View style={{ flex : 1 }}> 
+      <View style = {{ flex: 1, backgroundColor: "tomato"}}></View>
+      <View style = {{ flex: 1.5, backgroundColor: "teal"}}></View>
+      <View style = {{ flex: 1, backgroundColor: "orange"}}></View> 
     </View>
   );
 }
+//view = flexbox
+//웹이서는 display : flex; 쓰고 felx-direction
+//웹에서는 Row
+//모바일 column이 기본값
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text : {
-    fontSize :28,
-    color : red
-  }
-});
+
