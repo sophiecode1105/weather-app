@@ -5,8 +5,9 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text stlye = {styles.text}>startusBar는 상태바, 소통하기위한것</Text>
-      <StatusBar style="light" /> 
+      <view style = {{width:100,heightL100,backgroundcolor : "tomato" }}></view>
+      <view style = {{width:100,heightL100,backgroundcolor : "teal" }}></view>
+      <view style = {{width:100,heightL100,backgroundcolor : "orange" }}></view> 
     </View>
   );
 }
