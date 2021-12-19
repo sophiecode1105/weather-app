@@ -4,8 +4,8 @@ import { StyleSheet, Text, View, ScrollView,Dimensions } from 'react-native';
 
 const {width : SCREEN_WIDTH} = Dimensions.get('window');
 
-console.log(SCREEN_WIDTH)
-
+console.log(SCREEN_WIDTH) //days를 중앙에 배치할수가있다.
+//props를 보고 공부하면됩니다!
 
 export default function App() {
   return ( //레이아웃만들기 //부모컴포넌트 기준이기에 매우 중요
@@ -13,7 +13,10 @@ export default function App() {
      <View style={styles.city}>
      <Text style={styles.cityName}>Seoul</Text>
      </View>
-     <ScrollView horizontal contentContainerstyle={styles.weather}> 
+     <ScrollView pagingEnabled 
+                 horizontal 
+                 showsHorizontalScrollIndicator={false}
+                 contentContainerstyle={styles.weather}> 
        <View style={styles.day}>
         <Text style = {styles.temp}>27</Text>
         <Text style = {styles.description}>Sunny</Text>
@@ -50,14 +53,14 @@ export default function App() {
     },
     weather: {
       // flex:3, 없애줘야한다. 이유 : 스크롤뷰가 스크린보다 커져야지 효과가 자연스럽게 보여짐
-      backgroundColor : 'blue'
+      // backgroundColor : 'blue'
     },
     day:{
       // flex:1,
       // justifyContent : 'center',
       width:  SCREEN_WIDTH,
       alignItems : 'center',
-      backgroundColor : 'powderblue'
+      // backgroundColor : 'powderblue'
     },
     temp:{
       marginTop: 40,
