@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView,Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 
@@ -9,17 +9,21 @@ console.log(SCREEN_WIDTH) //days를 중앙에 배치할수가있다.
 //props를 보고 공부하면됩니다!
 
 export default function App() {
+  const [city, setCity] = useState('Loading...')
   const [location,setLocation] = useState();
   const [ok,setOk] = useState(true);
   const ask = async ()=>{
-    const permission = await Location.requestForegroundPermissionsAsync();
-    if(!permission){ //허가
+    const {granted} = await Location.requestForegroundPermissionsAsync();
+    if(!granted){ //허가
       setOk(false);
     }
     //정보를 가져오는것
-  const {coords:{latitude, longitude}} = await Location.getCurrentPositionAsync({accuracy:5})
-  const location = await Location.reverseGeocodeAsync({latitude,longitude},{useGoogleMaps:false});
-  console.log(location)
+    const {coords : {latitude, longitude}} = await Location.getCurrentPositionAsync({accuracy : 5})
+    const location = await 
+    Location.reverseGeocodeAsync(
+      {latitude,longitude},
+      {useGoogleMaps : false})
+      setCity(location[0].city);
   }
   useEffect(()=>{
     ask();
@@ -28,7 +32,7 @@ export default function App() {
   return ( //레이아웃만들기 //부모컴포넌트 기준이기에 매우 중요
     <View style={styles.container}> 
      <View style={styles.city}>
-     <Text style={styles.cityName}>Seoul</Text>
+     <Text style={styles.cityName}>{city}</Text>
      </View>
      <ScrollView pagingEnabled 
                  horizontal 
