@@ -1,18 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView,Dimensions } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, ScrollView,Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 
 const {width : SCREEN_WIDTH} = Dimensions.get('window');
+const API_KEY = "80a78bf4f23a76ca39f67e66beda86e8";
 
 console.log(SCREEN_WIDTH) //days를 중앙에 배치할수가있다.
 //props를 보고 공부하면됩니다!
 
 export default function App() {
   const [city, setCity] = useState('Loading...')
-  const [location,setLocation] = useState();
+  const [days, setDays] = useState([]);
   const [ok,setOk] = useState(true);
-  const ask = async ()=>{
+  const getWeather = async ()=>{
     const {granted} = await Location.requestForegroundPermissionsAsync();
     if(!granted){ //허가
       setOk(false);
@@ -24,9 +25,12 @@ export default function App() {
       {latitude,longitude},
       {useGoogleMaps : false})
       setCity(location[0].city);
-  }
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}`)
+      const json = await response.json();
+      //setDays(json.daily)
+    }
   useEffect(()=>{
-    ask();
+    getWeather();
   },[])
 
   return ( //레이아웃만들기 //부모컴포넌트 기준이기에 매우 중요
@@ -38,22 +42,11 @@ export default function App() {
                  horizontal 
                  showsHorizontalScrollIndicator={false}
                  contentContainerstyle={styles.weather}> 
-       <View style={styles.day}>
-        <Text style = {styles.temp}>27</Text>
-        <Text style = {styles.description}>Sunny</Text>
-       </View>
-       <View style={styles.day}>
-        <Text style = {styles.temp}>27</Text>
-        <Text style = {styles.description}>Sunny</Text>
-       </View>
-       <View style={styles.day}>
-        <Text style = {styles.temp}>27</Text>
-        <Text style = {styles.description}>Sunny</Text>
-       </View>
-       <View style={styles.day}>
-        <Text style = {styles.temp}>27</Text>
-        <Text style = {styles.description}>Sunny</Text>
-       </View>
+       {!days.length ? <View style={styles.day}>
+         <ActivityIndicator color = 'whilte' size = 'large'/>
+       </View>:
+        <View style={styles.day}></View>}
+
      </ScrollView>
     </View>
   );
